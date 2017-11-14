@@ -54,6 +54,8 @@ private_ip=`echo $(hostname -I)`
 privkey=$(readlink -f ~opc/.ssh/bmc_rsa)
 sleep 1m
 
+dse_version="5.1.0"
+
 ./setupCluster.py \
 --user $host_user_name \
 --pause 60 \
@@ -63,7 +65,8 @@ sleep 1m
 --privkey $privkey \
 --datapath /mnt/data1 \
 --repouser $dsa_username \
---repopw $dsa_password
+--repopw $dsa_password \
+--dsever $dse_version
 
 ./triggerInstall.py \
 --opsc-ip $public_ip \
