@@ -4,7 +4,7 @@ cp common/* work
 cp network/* work
 pushd $PWD
 cd work
-. env_vars
+. env-vars
 terraform init
 terraform apply
 popd

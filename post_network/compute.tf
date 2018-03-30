@@ -142,7 +142,7 @@ resource "oci_core_instance" "DSE_Node_IAD_1" {
         user_data = "${base64encode(format("%s\n%s %s %s %s\n",
            file(var.DSE_BootStrap),
            "./lcm_node.sh",
-           "${data.oci_core_vnic.DSE_OPSC_Vnic.priavte_ip_address}",
+           "${data.oci_core_vnic.DSE_OPSC_Vnic.private_ip_address}",
            "${var.DSE_Cluster_Name}",
            "us-ashburn-1"
         ))}"
