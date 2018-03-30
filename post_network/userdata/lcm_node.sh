@@ -57,6 +57,6 @@ cd install-datastax-ubuntu-$release/bin/lcm/
 --clustername $cluster_name \
 --dcname $data_center_name \
 --rack $rack \
---pubip $public_ip \
+--pubip $private_ip \
 --privip $private_ip \
 --nodeid $node_id

@@ -56,7 +56,7 @@ sleep 1m
 --user $host_user_name \
 --pause 60 \
 --trys 40 \
---opsc-ip $public_ip \
+--opsc-ip $private_ip \
 --clustername $cluster_name \
 --privkey $privkey \
 --datapath /mnt/data1 \
@@ -64,7 +64,7 @@ sleep 1m
 --repopw $dsa_password
 
 ./triggerInstall.py \
---opsc-ip $public_ip \
+--opsc-ip $private_ip \
 --clustername $cluster_name \
 --clustersize $cluster_size \
 --dbpasswd $db_pwd \
@@ -72,7 +72,7 @@ sleep 1m
 
 ./waitForJobs.py \
 --num $num_dcs \
---opsc-ip $public_ip
+--opsc-ip $private_ip
 
 # Alter required keyspaces for multi-DC
 ./alterKeyspaces.py
