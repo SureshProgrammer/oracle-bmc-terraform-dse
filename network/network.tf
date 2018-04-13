@@ -29,6 +29,10 @@ resource "oci_core_route_table" "DataStax_RT_PHX" {
         cidr_block = "0.0.0.0/0"
         network_entity_id = "${oci_core_internet_gateway.DataStax_IG_PHX.id}"
     }
+    route_rules {
+        cidr_block = "192.168.0.0/16"
+        network_entity_id = "${oci_core_drg.PHX_drg.id}"
+    }
 }
 
 
@@ -224,7 +228,7 @@ resource "oci_core_subnet" "DataStax_PublicSubnet_AD_PHX" {
 
 resource "oci_core_virtual_network" "DataStax_VCN_IAD" {
     provider = "oci.iad"
-    cidr_block = "10.0.0.0/16"
+    cidr_block = "192.168.0.0/16"
     compartment_id = "${var.compartment_ocid}"
     display_name = "DataStax_VCN-IAD"
     dns_label = "vcneast"
@@ -248,6 +252,10 @@ resource "oci_core_route_table" "DataStax_RT_IAD" {
     route_rules {
         cidr_block = "0.0.0.0/0"
         network_entity_id = "${oci_core_internet_gateway.DataStax_IG_IAD.id}"
+    }
+    route_rules {
+        cidr_block = "10.0.0.0/16"
+        network_entity_id = "${oci_core_drg.IAD_drg.id}"
     }
 }
 
@@ -274,7 +282,7 @@ resource "oci_core_security_list" "DataStax_PublicSubnet_IAD" {
             "type" = 3
         }
         protocol = "1"
-        source = "10.0.0.0/16"
+        source = "192.168.0.0/16"
     },
         {
         tcp_options {
@@ -427,7 +435,7 @@ resource "oci_core_security_list" "DataStax_PublicSubnet_IAD" {
 resource "oci_core_subnet" "DataStax_PublicSubnet_AD_IAD" {
     provider = "oci.iad"
     availability_domain = "${lookup(data.oci_identity_availability_domains.IAD_ADs.availability_domains[count.index],"name")}"
-    cidr_block = "${format("10.0.%d.0/24", count.index)}"
+    cidr_block = "${format("192.168.%d.0/24", count.index)}"
     display_name = "${format("PublicSubnetAD_IAD-%d", count.index)}"
     dns_label = "${format("dsesubnet%d", count.index)}"
     compartment_id = "${var.compartment_ocid}"
